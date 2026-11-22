@@ -1,0 +1,122 @@
+package javaapplication5;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class JavaApplication5 {
+
+    static Scanner teclado = new Scanner(System.in);
+    static ArrayList<String> productos = new ArrayList<>();
+    static ArrayList<Double> precios = new ArrayList<>();
+    static ArrayList<Integer> cantidades = new ArrayList<>();
+    static ArrayList<String> ventas = new ArrayList<>();
+    static ArrayList<Double> totales = new ArrayList<>();
+
+    public static void main(String[] args) {
+        int opcion;
+
+        do {
+            System.out.println("\n===== TIENDA =====");
+            System.out.println("1. Registrar producto");
+            System.out.println("2. Registrar venta");
+            System.out.println("3. Consultar ventas");
+            System.out.println("4. Salir");
+            System.out.print("Elige una opción: ");
+
+            opcion = teclado.nextInt();
+            teclado.nextLine();
+
+            switch (opcion) {
+                case 1:
+                    registrarProducto();
+                    break;
+                case 2:
+                    registrarVenta();
+                    break;
+                case 3:
+                    consultarVentas();
+                    break;
+                case 4:
+                    System.out.println("Programa terminado.");
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+            }
+        } while (opcion != 4);
+    }
+
+    static void registrarProducto() {
+        System.out.print("Nombre del producto: ");
+        String nombre = teclado.nextLine();
+
+        System.out.print("Precio: ");
+        double precio = teclado.nextDouble();
+
+        System.out.print("Cantidad disponible: ");
+        int cantidad = teclado.nextInt();
+        teclado.nextLine();
+
+        productos.add(nombre);
+        precios.add(precio);
+        cantidades.add(cantidad);
+
+        System.out.println("Producto registrado.");
+    }
+
+    static void registrarVenta() {
+        if (productos.isEmpty()) {
+            System.out.println("Primero registra un producto.");
+            return;
+        }
+
+        for (int i = 0; i < productos.size(); i++) {
+            System.out.println((i + 1) + ". " + productos.get(i)
+                    + " | Precio: $" + precios.get(i)
+                    + " | Disponible: " + cantidades.get(i));
+        }
+
+        System.out.print("Número del producto: ");
+        int numero = teclado.nextInt();
+
+        if (numero < 1 || numero > productos.size()) {
+            System.out.println("Producto no válido.");
+            teclado.nextLine();
+            return;
+        }
+
+        int indice = numero - 1;
+
+        System.out.print("Cantidad vendida: ");
+        int cantidadVendida = teclado.nextInt();
+        teclado.nextLine();
+
+        if (cantidadVendida <= 0 || cantidadVendida > cantidades.get(indice)) {
+            System.out.println("Cantidad no válida o inventario insuficiente.");
+            return;
+        }
+
+        double total = precios.get(indice) * cantidadVendida;
+        cantidades.set(indice, cantidades.get(indice) - cantidadVendida);
+        ventas.add(productos.get(indice) + " x " + cantidadVendida);
+        totales.add(total);
+
+        System.out.println("Venta registrada. Total: $" + total);
+    }
+
+    static void consultarVentas() {
+        if (ventas.isEmpty()) {
+            System.out.println("Todavía no hay ventas registradas.");
+            return;
+        }
+
+        double recaudado = 0;
+        System.out.println("\n===== VENTAS =====");
+
+        for (int i = 0; i < ventas.size(); i++) {
+            System.out.println(ventas.get(i) + " | Total: $" + totales.get(i));
+            recaudado += totales.get(i);
+        }
+
+        System.out.println("Dinero recaudado: $" + recaudado);
+    }
+}
