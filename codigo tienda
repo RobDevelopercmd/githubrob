@@ -20,48 +20,6 @@
             opcion = teclado.nextInt();
             teclado.nextLine();
 
-            switch (opcion) {
-                case 1:
-                    registrarProducto();
-                    break;
-                case 2:
-                    registrarVenta();
-                    break;
-                case 3:
-                    consultarVentas();
-                    break;
-                case 4:
-                    System.out.println("Programa terminado.");
-                    break;
-                default:
-                    System.out.println("Opción no válida.");
-            }
-        } while (opcion != 4);
-    }
-
-    static void registrarProducto() {
-        System.out.print("Nombre del producto: ");
-        String nombre = teclado.nextLine();
-
-        System.out.print("Precio: ");
-        double precio = teclado.nextDouble();
-
-        System.out.print("Cantidad disponible: ");
-        int cantidad = teclado.nextInt();
-        teclado.nextLine();
-
-        productos.add(nombre);
-        precios.add(precio);
-        cantidades.add(cantidad);
-
-        System.out.println("Producto registrado.");
-    }
-
-    static void registrarVenta() {
-        if (productos.isEmpty()) {
-            System.out.println("Primero registra un producto.");
-            return;
-        }
 
         for (int i = 0; i < productos.size(); i++) {
             System.out.println((i + 1) + ". " + productos.get(i)
