@@ -1,9 +1,3 @@
-package javaapplication5;
-
-import java.util.ArrayList;
-import java.util.Scanner;
-
-public class JavaApplication5 {
 
     static Scanner teclado = new Scanner(System.in);
     static ArrayList<String> productos = new ArrayList<>();
